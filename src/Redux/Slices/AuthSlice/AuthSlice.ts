@@ -6,11 +6,11 @@ import { IUser } from './AuthSliceTypes';
 import { extractUserFromToken } from './Helper';
 import { loginUser } from './Functions';
 
-const initialState = EMPTY_AUTH_STATE;
+// const initialState = EMPTY_AUTH_STATE;
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: { ...EMPTY_AUTH_STATE },
   reducers: {
     clearAuth: (state) => {
       state.loading = false;
@@ -21,8 +21,8 @@ export const authSlice = createSlice({
       delete axios.defaults.headers.common['Authorization'];
       localStorage.removeItem('jwtToken');
     },
-    updateAuth: (state, action) => {
-      const token = action.payload;
+    updateAuth: (state) => {
+      const token = localStorage.getItem('jwtToken') as string;
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       const user = extractUserFromToken(token);

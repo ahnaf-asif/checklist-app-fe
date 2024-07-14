@@ -6,17 +6,19 @@ import { useEffect } from 'react';
 import { AuthenticationModal } from '@/Shared/Components';
 import { useAppSelector, useAppDispatch } from '@/Redux/hooks.ts';
 import { closeAuthModal, openAuthModal } from '@/Redux/Slices/AuthModalSlice';
+import { Link } from 'react-router-dom';
 
 export const CommonLayout = ({ children }: any) => {
-  const [authenticationModalOpened, { open, close }] = useDisclosure(false);
+  const [authenticationModalOpened, { open: displayAuthModal, close: unDisplayAuthModal }] =
+    useDisclosure(false);
   const dispatch = useAppDispatch();
   const authModalOpened = useAppSelector((state) => state.authModal.isOpen);
 
   useEffect(() => {
     if (authModalOpened) {
-      open();
+      displayAuthModal();
     } else {
-      close();
+      unDisplayAuthModal();
     }
   }, [authModalOpened]);
 
@@ -37,8 +39,8 @@ export const CommonLayout = ({ children }: any) => {
       >
         <AuthenticationModal />
       </Modal>
-
       <Button onClick={() => setAuthModal(true)}>Open modal</Button>
+      <Link to={'/'}>Home</Link> <Link to={'/protected'}>About</Link>
     </Box>
   );
 };

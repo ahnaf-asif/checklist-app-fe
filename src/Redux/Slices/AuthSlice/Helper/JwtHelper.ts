@@ -6,6 +6,8 @@ export const extractUserFromToken = (token: string): IUser => {
   return {
     user_id: resp.user.user_id,
     name: resp.user.name,
-    email: resp.user.email
+    email: resp.user.email,
+    iat: resp.user.iat,
+    exp: resp.user.exp
   };
 };

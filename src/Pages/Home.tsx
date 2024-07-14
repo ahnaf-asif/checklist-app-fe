@@ -1,5 +1,9 @@
 import { Box } from '@mantine/core';
 
 export const Home = () => {
-  return <Box>This is home</Box>;
+  return (
+    <Box>
+      <Box>This is home</Box>
+    </Box>
+  );
 };

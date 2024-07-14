@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { store } from '@/Redux/store';
 import { API_URL } from '@/Config';
-import { openAuthModal } from '@/Redux/Slices/AuthModalSlice';
 
 const axiosExtended = axios.create({
   baseURL: API_URL,
@@ -12,7 +10,7 @@ axiosExtended.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
-      store.dispatch(openAuthModal());
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
