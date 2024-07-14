@@ -1,14 +1,12 @@
-import { Box, Button } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { Modal } from '@mantine/core';
 import { useEffect } from 'react';
+import { Box, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
-import { AuthenticationModal } from '@/Shared/Components';
-import { useAppSelector, useAppDispatch } from '@/Redux/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/Redux/hooks.ts';
 import { closeAuthModal, openAuthModal } from '@/Redux/Slices/AuthModalSlice';
-import { Link } from 'react-router-dom';
+import { Authentication } from './Authentication.tsx';
 
-export const CommonLayout = ({ children }: any) => {
+export const AuthModal = () => {
   const [authenticationModalOpened, { open: displayAuthModal, close: unDisplayAuthModal }] =
     useDisclosure(false);
   const dispatch = useAppDispatch();
@@ -29,7 +27,6 @@ export const CommonLayout = ({ children }: any) => {
 
   return (
     <Box>
-      {children}
       <Modal
         closeOnClickOutside={false}
         opened={authenticationModalOpened}
@@ -37,10 +34,8 @@ export const CommonLayout = ({ children }: any) => {
         title="Authentication"
         centered
       >
-        <AuthenticationModal />
+        <Authentication />
       </Modal>
-      <Button onClick={() => setAuthModal(true)}>Open modal</Button>
-      <Link to={'/'}>Home</Link> <Link to={'/protected'}>About</Link>
     </Box>
   );
 };

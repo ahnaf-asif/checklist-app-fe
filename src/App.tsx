@@ -1,15 +1,7 @@
-import { CommonLayout } from '@/Layouts';
-import { AppRoutes } from '@/Routes/AppRoutes.tsx';
-import { Box } from '@mantine/core';
+import { AppRoutes } from '@/Routes';
 
 function App() {
-  return (
-    <CommonLayout>
-      <Box mt={70}>
-        <AppRoutes />
-      </Box>
-    </CommonLayout>
-  );
+  return <AppRoutes />;
 }
 
 export default App;

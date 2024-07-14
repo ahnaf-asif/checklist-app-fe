@@ -8,6 +8,7 @@ import { openAuthModal } from '@/Redux/Slices/AuthModalSlice';
 
 export const AuthGuard = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
+
   const auth = useAppSelector((state) => state.auth);
   const authModalOpened = useAppSelector((state) => state.authModal.isOpen);
 
