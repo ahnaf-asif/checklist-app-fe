@@ -3,10 +3,12 @@ import { Layout } from '@/Layouts';
 
 export const Home = () => {
   return (
-    <Layout showSidebar>
+    // <AuthGuard>
+    <Layout>
       <Box>
         <Box>This is home</Box>
       </Box>
     </Layout>
+    // </AuthGuard>
   );
 };
