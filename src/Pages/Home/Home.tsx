@@ -1,14 +1,18 @@
 import { Box } from '@mantine/core';
-import { Layout } from '@/Layouts';
 
-export const Home = () => {
+import { Layout } from '@/Layouts';
+import { Brand } from './Brand.tsx';
+
+const Home = () => {
   return (
     // <AuthGuard>
     <Layout>
-      <Box>
-        <Box>This is home</Box>
+      <Box px="5rem">
+        <Brand />
       </Box>
     </Layout>
     // </AuthGuard>
   );
 };
+
+export default Home;

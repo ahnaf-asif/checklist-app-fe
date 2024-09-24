@@ -2,10 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axios } from '@/Config';
 import { extractUserFromToken } from '../Helper';
 
-const REGISTER_URL = '/auth/register';
+const REGISTER_URL = '/users/signup';
 
 export interface IRegisterData {
   name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -22,8 +23,9 @@ export const registerUser = createAsyncThunk(
 
       return extractUserFromToken(jwtToken);
     } catch (e) {
-      const message = 'The email or password is incorrect';
-      return rejectWithValue(message);
+      // @ts-ignore
+      const error = e.response.data.error;
+      return rejectWithValue(error);
     }
   }
 );

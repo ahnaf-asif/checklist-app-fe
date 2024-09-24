@@ -9,12 +9,10 @@ export const authModalSlice = createSlice({
 
   reducers: {
     openAuthModal: (state) => {
-      console.log('openAuthModal triggered on');
       state.isOpen = true;
     },
     closeAuthModal: (state) => {
       state.isOpen = false;
-      console.log('openAuthModal triggered off');
     }
   }
 });

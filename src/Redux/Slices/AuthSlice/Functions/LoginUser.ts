@@ -2,10 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axios } from '@/Config';
 import { extractUserFromToken } from '../Helper';
 
-const LOGIN_URL = '/auth/login';
+const LOGIN_URL = '/users/signin';
 
 export interface ILoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -21,7 +21,7 @@ export const loginUser = createAsyncThunk(
 
       return extractUserFromToken(jwtToken);
     } catch (e) {
-      const message = 'The email or password is incorrect';
+      const message = 'The username or password is incorrect';
       return rejectWithValue(message);
     }
   }

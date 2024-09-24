@@ -2,12 +2,14 @@ import { jwtDecode } from 'jwt-decode';
 import { IUser } from '../AuthSliceTypes.ts';
 
 export const extractUserFromToken = (token: string): IUser => {
-  const resp = jwtDecode(token) as { user: IUser };
+  const user = jwtDecode(token) as IUser;
+
   return {
-    user_id: resp.user.user_id,
-    name: resp.user.name,
-    email: resp.user.email,
-    iat: resp.user.iat,
-    exp: resp.user.exp
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    iat: user.iat,
+    exp: user.exp
   };
 };
