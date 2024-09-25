@@ -6,8 +6,11 @@ import { notifications } from '@mantine/notifications';
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks.ts';
 import { loginUser, ILoginData } from '@/Redux/Slices/AuthSlice';
 import { closeAuthModal } from '@/Redux/Slices/AuthModalSlice';
+import { AuthModalProps } from './AuthModal.tsx';
+import { useNavigate } from 'react-router-dom';
 
-export const SignIn = () => {
+export const SignIn = ({ redirectTo }: AuthModalProps) => {
+  const navigate = useNavigate();
   const signInForm: UseFormReturnType<ILoginData> = useForm({
     initialValues: {
       username: '',
@@ -27,6 +30,9 @@ export const SignIn = () => {
     setDefaultError(null);
     try {
       dispatch(loginUser(values));
+      if (redirectTo) {
+        return navigate(redirectTo);
+      }
     } catch (e) {
       console.log(e);
     }

@@ -3,3 +3,4 @@ export { Dashboard } from './Dashboard';
 export { Groups } from './Groups';
 export { Checklists } from './Checklists';
 export { Friends } from './Friends';
+export { Login } from './Login';

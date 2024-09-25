@@ -6,6 +6,8 @@ import { IRegisterData } from '@/Redux/Slices/AuthSlice';
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks.ts';
 import { registerUser } from '@/Redux/Slices/AuthSlice';
 import { closeAuthModal } from '@/Redux/Slices/AuthModalSlice';
+import { AuthModalProps } from './AuthModal.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type SignUpFormValues = {
   name: string;
@@ -15,7 +17,8 @@ type SignUpFormValues = {
   confirmPassword: string;
 };
 
-export const SignUp = () => {
+export const SignUp = ({ redirectTo }: AuthModalProps) => {
+  const navigate = useNavigate();
   const signUpForm: UseFormReturnType<SignUpFormValues> = useForm({
     initialValues: {
       name: '',
@@ -42,6 +45,9 @@ export const SignUp = () => {
   const signUpUser = (values: SignUpFormValues) => {
     const { confirmPassword, ...formValues } = values;
     dispatch(registerUser(formValues as IRegisterData));
+    if (redirectTo) {
+      return navigate(redirectTo);
+    }
   };
 
   useEffect(() => {
