@@ -13,8 +13,8 @@ const sidebarItems = [
     itemLink: '/dashboard'
   },
   {
-    itemText: 'My Friends',
-    itemLink: '/friends'
+    itemText: 'Community',
+    itemLink: '/community'
   },
   {
     itemText: 'Groups',

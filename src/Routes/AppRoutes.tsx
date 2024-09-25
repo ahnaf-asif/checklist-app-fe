@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 import { ReactElement } from 'react';
-import { Dashboard, Home, Groups, Friends, Checklists, Login } from '@/Pages';
+import { Dashboard, Home, Groups, Community, Checklists, Login } from '@/Pages';
 
 export interface RouteType {
   path: string;
@@ -21,8 +21,8 @@ const routeList: RouteType[] = [
     element: <Groups />
   },
   {
-    path: '/friends',
-    element: <Friends />
+    path: '/community',
+    element: <Community />
   },
   {
     path: '/checklists',
