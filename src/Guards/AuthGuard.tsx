@@ -2,7 +2,7 @@ import { LoadingOverlay } from '@mantine/core';
 import { ReactNode, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@/Redux/hooks.ts';
-import { updateAuth } from '@/Redux/Slices/AuthSlice/AuthSlice.ts';
+import { clearAuth, updateAuth } from '@/Redux/Slices/AuthSlice/AuthSlice.ts';
 import { checkJwtExpiration } from './Helper.ts';
 import { openAuthModal } from '@/Redux/Slices/AuthModalSlice';
 
@@ -13,6 +13,8 @@ export const AuthGuard = ({ children }: { children: ReactNode }) => {
   const authModalOpened = useAppSelector((state) => state.authModal.isOpen);
 
   const reAuthenticate = () => {
+    if (localStorage.getItem('jwtToken')) localStorage.removeItem('jwtToken');
+    dispatch(clearAuth());
     dispatch(openAuthModal());
   };
   const authorizeExistingUser = () => {
