@@ -78,7 +78,7 @@ export const NavLogout = () => {
         onClose={updateInfoModalMethods.close}
         title="Update Personal Information"
       >
-        <UpdateUser />
+        <UpdateUser closeModal={updateInfoModalMethods.close} />
       </Modal>
     </Menu>
   );

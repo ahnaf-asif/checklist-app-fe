@@ -1,16 +1,24 @@
 import { hasLength, isEmail, isNotEmpty, useForm } from '@mantine/form';
-import { useAppSelector } from '@/Redux/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/Redux/hooks.ts';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useEffect } from 'react';
+import { axios } from '@/Config';
+import { updateAuth } from '@/Redux/Slices/AuthSlice';
+import { notifications } from '@mantine/notifications';
 
-export const UpdateUser = () => {
+interface UpdateUserFormProps {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export const UpdateUser = ({ closeModal }: any) => {
   const auth = useAppSelector((state) => state.auth);
 
   const updateUserForm = useForm({
     initialValues: {
       name: '',
       email: '',
-      username: '',
       password: ''
     },
     validate: {
@@ -20,12 +28,35 @@ export const UpdateUser = () => {
     }
   });
 
+  const dispatch = useAppDispatch();
+
+  const updateCurrentUser = async (values: UpdateUserFormProps) => {
+    try {
+      const { data } = await axios.put(`/users/${auth.user?.id}`, values);
+      localStorage.setItem('jwtToken', data.token);
+
+      dispatch(updateAuth());
+
+      closeModal();
+
+      notifications.show({
+        title: 'Success',
+        message: 'Successfully updated personal Info!!',
+        color: 'green'
+      });
+    } catch (e) {
+      const error = (e as any).response.data.error;
+      if (error.includes('password')) {
+        updateUserForm.setErrors({ password: error });
+      }
+    }
+  };
+
   useEffect(() => {
     if (auth.user) {
       updateUserForm.setValues({
         name: auth.user.name,
-        email: auth.user.email,
-        username: auth.user.username
+        email: auth.user.email
       });
     }
   }, [auth]);
@@ -33,7 +64,7 @@ export const UpdateUser = () => {
   return (
     <form
       onSubmit={updateUserForm.onSubmit((values) => {
-        console.log(values);
+        updateCurrentUser(values);
       })}
     >
       <TextInput
@@ -42,7 +73,7 @@ export const UpdateUser = () => {
         disabled
         withAsterisk
         required
-        {...updateUserForm.getInputProps('username')}
+        value={auth.user?.username}
         label="Username"
       ></TextInput>
 
