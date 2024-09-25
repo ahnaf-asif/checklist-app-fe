@@ -13,16 +13,18 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
+import './styles.css';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <MantineProvider theme={mantineTheme} defaultColorScheme="light">
-        <BrowserRouter>
-          <Notifications />
-          <App />
-          <AuthModal />
-        </BrowserRouter>
-      </MantineProvider>
-    </Provider>
-  </StrictMode>
+    <StrictMode>
+        <Provider store={store}>
+            <MantineProvider theme={mantineTheme} defaultColorScheme="light">
+                <BrowserRouter>
+                    <Notifications />
+                    <App />
+                    <AuthModal />
+                </BrowserRouter>
+            </MantineProvider>
+        </Provider>
+    </StrictMode>
 );
