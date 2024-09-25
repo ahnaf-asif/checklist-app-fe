@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from '@/Redux/hooks.ts';
 import { clearAuth, updateAuth } from '@/Redux/Slices/AuthSlice/AuthSlice.ts';
 import { checkJwtExpiration } from './Helper.ts';
 import { openAuthModal } from '@/Redux/Slices/AuthModalSlice';
+import { axios } from '@/Config';
 
 export const AuthGuard = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ export const AuthGuard = ({ children }: { children: ReactNode }) => {
 
   const reAuthenticate = () => {
     if (localStorage.getItem('jwtToken')) localStorage.removeItem('jwtToken');
+    axios.defaults.headers.common['Authorization'] = '';
     dispatch(clearAuth());
     dispatch(openAuthModal());
   };

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { UpdateUser } from '@/Shared/Components';
+import { axios } from '@/Config';
 
 export const NavLogout = () => {
   const [updateInfoModal, updateInfoModalMethods] = useDisclosure(false);
@@ -24,6 +25,7 @@ export const NavLogout = () => {
   const navigate = useNavigate();
 
   const signOut = () => {
+    axios.defaults.headers.common['Authorization'] = '';
     dispatch(clearAuth());
     notifications.show({
       title: 'Success!!!',

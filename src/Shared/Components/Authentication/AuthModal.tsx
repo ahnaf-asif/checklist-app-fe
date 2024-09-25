@@ -8,6 +8,11 @@ import { closeAuthModal, openAuthModal } from '@/Redux/Slices/AuthModalSlice';
 
 import { SignIn } from './signIn.tsx';
 import { SignUp } from './signUp.tsx';
+import { useLocation } from 'react-router-dom';
+
+export interface AuthModalProps {
+  redirectTo?: string;
+}
 
 export const AuthModal = () => {
   const [authenticationModalOpened, { open: displayAuthModal, close: unDisplayAuthModal }] =
@@ -28,6 +33,8 @@ export const AuthModal = () => {
     else dispatch(closeAuthModal());
   };
 
+  const { pathname } = useLocation();
+
   return (
     <Box>
       <Modal
@@ -35,9 +42,9 @@ export const AuthModal = () => {
         opened={authenticationModalOpened}
         onClose={() => setAuthModal(false)}
         centered
+        withCloseButton={pathname !== '/login'}
         size="lg"
       >
-        {/*<Authentication />*/}
         <Tabs defaultValue="gallery">
           <Tabs.List grow>
             <Tabs.Tab value="gallery" leftSection={<IconUser />}>
@@ -48,10 +55,10 @@ export const AuthModal = () => {
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="gallery">
-            <SignIn />
+            <SignIn redirectTo={pathname === '/login' ? '/' : undefined} />
           </Tabs.Panel>
           <Tabs.Panel value="messages">
-            <SignUp></SignUp>
+            <SignUp redirectTo={pathname === '/login' ? '/' : undefined}></SignUp>
           </Tabs.Panel>
         </Tabs>
       </Modal>
