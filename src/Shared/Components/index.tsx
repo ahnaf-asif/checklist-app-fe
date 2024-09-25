@@ -1,2 +1,2 @@
 export { AuthModal } from './Authentication';
-export { UpdateUser } from './User';
+export * from './User';
