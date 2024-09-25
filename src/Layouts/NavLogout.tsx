@@ -6,18 +6,22 @@ import {
   IconUser,
   IconMail,
   IconLogout,
-  IconDatabase
+  IconDatabase,
+  IconTrash
 } from '@tabler/icons-react';
 import { clearAuth } from '@/Redux/Slices/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
-import { UpdateUser } from '@/Shared/Components';
+import { ChangePassword, DeleteAccount, UpdateUser } from '@/Shared/Components';
 import { axios } from '@/Config';
 
 export const NavLogout = () => {
   const [updateInfoModal, updateInfoModalMethods] = useDisclosure(false);
+  const [updatePasswordModal, updatePasswordModalMethods] = useDisclosure(false);
+  const [deleteAccountModal, deleteAccountModalMethods] = useDisclosure(false);
+
   const [opened, setOpened] = useState(false);
   const auth = useAppSelector((state) => state.auth);
 
@@ -62,6 +66,20 @@ export const NavLogout = () => {
         >
           Update Personal Information
         </Menu.Item>
+
+        <Menu.Item
+          onClick={updatePasswordModalMethods.open}
+          leftSection={<IconDatabase style={{ width: rem(14), height: rem(14) }} />}
+        >
+          Update Password
+        </Menu.Item>
+        <Menu.Item
+          color="red"
+          onClick={deleteAccountModalMethods.open}
+          leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
+        >
+          Delete Account
+        </Menu.Item>
         <Menu.Divider />
 
         <Menu.Item
@@ -79,6 +97,22 @@ export const NavLogout = () => {
         title="Update Personal Information"
       >
         <UpdateUser closeModal={updateInfoModalMethods.close} />
+      </Modal>
+      <Modal
+        centered
+        opened={updatePasswordModal}
+        onClose={updatePasswordModalMethods.close}
+        title="Update Password"
+      >
+        <ChangePassword closeModal={updatePasswordModalMethods.close} />
+      </Modal>
+      <Modal
+        centered
+        opened={deleteAccountModal}
+        onClose={deleteAccountModalMethods.close}
+        title="Delete Account"
+      >
+        <DeleteAccount closeModal={deleteAccountModalMethods.close} />
       </Modal>
     </Menu>
   );
