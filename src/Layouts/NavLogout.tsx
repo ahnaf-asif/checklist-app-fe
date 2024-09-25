@@ -1,18 +1,22 @@
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks.ts';
-import { Menu, Button, rem } from '@mantine/core';
+import { Menu, Button, rem, Modal } from '@mantine/core';
 import {
   IconChevronRight,
   IconChevronDown,
   IconUser,
   IconMail,
-  IconLogout
+  IconLogout,
+  IconDatabase
 } from '@tabler/icons-react';
 import { clearAuth } from '@/Redux/Slices/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { notifications } from '@mantine/notifications';
+import { useDisclosure } from '@mantine/hooks';
+import { UpdateUser } from '@/Shared/Components';
 
 export const NavLogout = () => {
+  const [updateInfoModal, updateInfoModalMethods] = useDisclosure(false);
   const [opened, setOpened] = useState(false);
   const auth = useAppSelector((state) => state.auth);
 
@@ -50,6 +54,13 @@ export const NavLogout = () => {
         </Menu.Item>
 
         <Menu.Divider />
+        <Menu.Item
+          onClick={updateInfoModalMethods.open}
+          leftSection={<IconDatabase style={{ width: rem(14), height: rem(14) }} />}
+        >
+          Update Personal Information
+        </Menu.Item>
+        <Menu.Divider />
 
         <Menu.Item
           color="red"
@@ -59,6 +70,14 @@ export const NavLogout = () => {
           Sign Out
         </Menu.Item>
       </Menu.Dropdown>
+      <Modal
+        centered
+        opened={updateInfoModal}
+        onClose={updateInfoModalMethods.close}
+        title="Update Personal Information"
+      >
+        <UpdateUser />
+      </Modal>
     </Menu>
   );
 };
