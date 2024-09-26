@@ -1,21 +1,27 @@
 import { Layout } from '@/Layouts';
-import { Title, TextInput, Tabs, Space } from '@mantine/core';
+import { Title, TextInput, Tabs, Space, Button, Flex } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { IconSearch } from '@tabler/icons-react';
+import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { useDebounceCallback } from '@mantine/hooks';
 import { axios } from '@/Config';
 import { notifications } from '@mantine/notifications';
 import { useAppSelector } from '@/Redux/hooks';
 import { ChecklistGrid } from './Components/ChecklistCard';
+import CreateChecklistModal from './Components/CreateChecklistModel';
 
 export const Checklists = () => {
     const [query, setQuery] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [checklists, setChecklists] = useState<Record<string, any>[]>([]);
+    const [modalOpened, setModalOpened] = useState(false);
+
+    const openModal = () => setModalOpened(true);
+    const closeModal = () => setModalOpened(false);
     const auth = useAppSelector((state) => state.auth);
     useEffect(() => {
+        if (modalOpened) return;
         handleSearch();
-    }, [auth])
+    }, [auth, modalOpened])
 
     const handleSearch = useDebounceCallback(async () => {
         setLoading(true);
@@ -23,7 +29,6 @@ export const Checklists = () => {
             const response = await axios.get('/checklists', {
                 params: { searchQuery: query }
             });
-            console.log(response.data);
             setChecklists(response.data);
         } catch (error) {
             notifications.show({
@@ -52,7 +57,12 @@ export const Checklists = () => {
     }
     return (
         <Layout showSidebar >
-            <Title>Checklists</Title>
+            <Flex justify="space-between" align="center">
+                <Title>Checklists</Title>
+                <Button leftSection={<IconPlus />} onClick={openModal}>
+                    Create New Checklist
+                </Button>
+            </Flex>
             <TextInput
                 onChange={handleChange}
                 placeholder="Search checklists"
@@ -87,6 +97,7 @@ export const Checklists = () => {
                 </Tabs.Panel>
 
             </Tabs>
+            <CreateChecklistModal opened={modalOpened} onClose={closeModal} />
         </Layout>
     );
 };
