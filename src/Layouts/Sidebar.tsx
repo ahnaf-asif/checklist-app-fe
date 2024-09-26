@@ -36,7 +36,7 @@ export const Sidebar = () => {
           key={index}
           itemText={item.itemText}
           itemLink={item.itemLink}
-          isCurrent={pathname === item.itemLink}
+          isCurrent={pathname.includes(item.itemLink)}
         />
       ))}
     </Box>
