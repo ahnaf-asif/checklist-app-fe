@@ -1,5 +1,5 @@
 import { Layout } from '@/Layouts';
-import { Tabs, Text, Title } from '@mantine/core';
+import { Tabs, Title } from '@mantine/core';
 import { Friends } from '@/Pages/Community/Friends.tsx';
 import { AllUsers } from '@/Pages/Community/AllUsers.tsx';
 import { useEffect, useState } from 'react';
@@ -16,7 +16,6 @@ export const Community = () => {
         <Tabs.List>
           <Tabs.Tab value="friends">Friends</Tabs.Tab>
           <Tabs.Tab value="all">All Users</Tabs.Tab>
-          <Tabs.Tab value="leaderboard">Leaderboard</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="friends">
@@ -24,9 +23,6 @@ export const Community = () => {
         </Tabs.Panel>
         <Tabs.Panel value="all">
           <AllUsers activeTab={activeTab} />
-        </Tabs.Panel>
-        <Tabs.Panel value="leaderboard">
-          <Text>Pore korbo eta chudi</Text>
         </Tabs.Panel>
       </Tabs>
     </Layout>

@@ -50,18 +50,14 @@ export const Group = () => {
             <Tabs mt={20} defaultValue="overview">
               <Tabs.List>
                 <Tabs.Tab value="overview">Overview</Tabs.Tab>
-                <Tabs.Tab value="Checklists">Checklists</Tabs.Tab>
                 <Tabs.Tab value="Members">Members</Tabs.Tab>
-                <Tabs.Tab value="leaderboard">Leaderboard</Tabs.Tab>
               </Tabs.List>
               <Tabs.Panel value="overview">
                 <Overview group={group} />
               </Tabs.Panel>
-              <Tabs.Panel value="Checklists">Checklists</Tabs.Panel>
               <Tabs.Panel value="Members">
                 <Members group={group} />
               </Tabs.Panel>
-              <Tabs.Panel value="leaderboard"> Leaderboard</Tabs.Panel>
             </Tabs>
           </Box>
         )}

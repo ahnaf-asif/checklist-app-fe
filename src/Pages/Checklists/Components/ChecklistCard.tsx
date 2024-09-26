@@ -1,5 +1,31 @@
 import { Grid, Card, Button, Skeleton, Group, Badge, Text } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/Redux/hooks.ts';
+import { useEffect } from 'react';
+import { axios } from '@/Config';
+import { notifications } from '@mantine/notifications';
 export const ChecklistGrid = (condition: any, checklists: any[], loading: boolean) => {
+  const navigate = useNavigate();
+  const auth = useAppSelector((state) => state.auth);
+
+  const enrollChecklist = async (data: any) => {
+    try {
+      await axios.post('/checklists/enroll', data);
+      notifications.show({
+        title: 'Success',
+        message: 'Enrolled successfully',
+        color: 'green'
+      });
+      navigate(`/checklists/${data.checklist_id}`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    if (auth.user) console.log(checklists);
+  }, [auth, checklists]);
+
   return (
     <Grid>
       {loading
@@ -31,9 +57,25 @@ export const ChecklistGrid = (condition: any, checklists: any[], loading: boolea
                   <Text size="sm" style={{ lineHeight: 1.5 }}>
                     {checklist.description}
                   </Text>
-                  <Button fullWidth mt="md" variant={checklist.enrolled ? 'outline' : 'filled'}>
-                    {checklist.enrolled ? 'Edit' : 'Enroll'}
-                  </Button>
+                  {(checklist.enrolled || checklist.creator_id === auth.user?.id) && (
+                    <Button
+                      mt={20}
+                      onClick={() => navigate(`/checklists/${checklist.id}`)}
+                      variant="outline"
+                    >
+                      Enter
+                    </Button>
+                  )}
+                  {!checklist.enrolled && checklist.creator_id !== auth.user?.id && (
+                    <Button
+                      mt={20}
+                      onClick={() =>
+                        enrollChecklist({ user_id: auth.user?.id, checklist_id: checklist.id })
+                      }
+                    >
+                      Enroll
+                    </Button>
+                  )}
                 </Card>
               </Grid.Col>
             ))}
